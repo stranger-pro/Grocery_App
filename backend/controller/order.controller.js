@@ -7,23 +7,25 @@ export const placeOrderCOD = async (req, res) => {
     const { items, address } = req.body;
     if (!address || !items || items.length === 0) {
       return res
-        .status(400)
-        .json({ message: "Invalid order details", success: false });
+      .status(400)
+      .json({
+        message: "Invalid order details", success: false
+      });
     }
-   
+    
     let amount = await items.reduce(async (acc, item) => {
       const product = await Product.findById(item.product);
       return (await acc) + product.offerPrice * item.quantity;
     }, 0);
-
+    
     amount += Math.floor((amount * 2) / 100);
     await Order.create({
       userId,
       items,
       address,
       amount,
-      paymentType: "COD",
-      isPaid: false,
+      paymentType: items[0].paymentType,
+      isPaid: items[0].isPaid,
     });
     res
       .status(201)

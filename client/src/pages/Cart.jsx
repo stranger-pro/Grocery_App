@@ -68,11 +68,14 @@ const Cart = () => {
         return toast.error("Please select an address");
       }
       // place order with cod
+     
       if (paymentOption === "COD") {
         const { data } = await axios.post("/api/order/cod", {
           items: cartArray.map((item) => ({
             product: item._id,
             quantity: item.quantity,
+            paymentType:"COD",
+            isPaid:false
           })),
           address: selectedAddress._id,
         });
@@ -84,6 +87,14 @@ const Cart = () => {
           toast.error(data.message);
         }
       }
+      if(paymentOption === "Online"){
+        console.log("yes")
+        const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/order/payment`,{
+          items:cartArray
+        });
+        window.location.href = data.url
+      }
+
     } catch (error) {
       toast.error(error.message);
     }

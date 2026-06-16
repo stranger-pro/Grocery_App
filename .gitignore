@@ -26,4 +26,4 @@ client/dist-ssr
 client/.env
 backend/.env
 backend/node_modules/
-node_modules/
+client/node_modules/
