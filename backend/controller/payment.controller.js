@@ -48,3 +48,44 @@ export const createCheckout = async(req,res) => {
     res.status(500).json({error:e.message})
    }
 }
+
+
+export const webhookController = async (req,res) => {
+    try{
+
+        const sig = req.headers["stripe-signature"];
+        let event;
+
+        try{
+            event = stripe.webhooks.constructEvent(
+                req.body,
+                sig,
+                process.env.WEBHOOK_SECRET_KEY
+            );
+        }catch(e){
+            return res.json(400).send(e.message);
+        }
+
+        if(event.type === "checkout.session.completed"){
+            const session = event.data.object;
+
+            const order = Order.create({
+                user:session.metadata.userId,
+                items:JSON.parse(session.metadata.items),
+                paymentType:"paid",
+                stripeSessionId:session.id,
+                price:session.amount_total/100,
+
+            });
+            console.log("order_created");
+        }
+
+        res.json({
+            received:true
+        })
+
+    }catch(e){
+         console.log(e);
+         res.status(500).json({error:e.message})
+    }
+}
