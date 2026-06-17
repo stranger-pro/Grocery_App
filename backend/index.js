@@ -10,6 +10,7 @@ import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import addressRoutes from "./routes/address.routes.js";
 import orderRoutes from "./routes/order.routes.js";
+import {webhookController} from "./controller/payment.controller.js"
 
 import { connectCloudinary } from "./config/cloudinary.js";
 
@@ -20,6 +21,7 @@ await connectCloudinary();
 const allowedOrigins = [`${process.env.CLIENT_URL}`];
 
 app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.post("/api/payment/webhook",express.raw({type:"application/json"}))
 app.use(cookieParser());
 app.use(express.json());
 
