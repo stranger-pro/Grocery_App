@@ -50,7 +50,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// login user: /api/user/login
 
 export const loginUser = async (req, res) => {
   try {
@@ -97,7 +96,6 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// check auth : /api/user/is-auth
 export const checkAuth = async (req, res) => {
   try {
     const userId = req.user;
@@ -117,7 +115,6 @@ export const checkAuth = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-// logout user: /api/user/logout
 export const logout = async (req, res) => {
   try {
     res.clearCookie("token", {
