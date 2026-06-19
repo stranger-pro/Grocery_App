@@ -32,8 +32,8 @@ export const createCheckout = async(req,res) => {
             quantity:item.quantity,
         })),
 
-        success_url:`${process.env.CLIENT_URL}/my-order`,
-        success_url:`${process.env.CLIENT_URL}/my-order`
+        success_url:`${process.env.CLIENT_URL}/products`,
+        success_url:`${process.env.CLIENT_URL}/products`
 
         
     })

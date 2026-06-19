@@ -53,7 +53,7 @@ const SingleProduct = () => {
 
             <div className="border border-gray-500/30 max-w-100 rounded overflow-hidden">
               <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/images/${thumbnail}`}
+                src={thumbnail}
                 alt="Selected product"
               />
             </div>
