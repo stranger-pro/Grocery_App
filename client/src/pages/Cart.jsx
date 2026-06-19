@@ -48,7 +48,7 @@ const Cart = () => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      toast.error(error.response.data.message);
     }
   };
   useEffect(() => {
@@ -62,6 +62,28 @@ const Cart = () => {
       getCart();
     }
   }, [products, cartItems]);
+
+  const order = async() => {
+   try{
+       const { data } = await axios.post("/api/order/cod", {
+          items: cartArray.map((item) => ({
+            product: item._id,
+            quantity: item.quantity,
+            paymentType:"Online",
+            isPaid:true
+          })),
+          address: selectedAddress._id,
+        });
+        if (data.success) {
+          setCartItems({});
+        } else {
+          toast.error(data.message);
+        }
+   }catch(e){
+    toast.error(data.message);
+   }
+  }
+
   const placeOrder = async () => {
     try {
       if (!selectedAddress) {
@@ -88,10 +110,11 @@ const Cart = () => {
         }
       }
       if(paymentOption === "Online"){
-        console.log("yes")
+        
         const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/order/payment`,{
           items:cartArray
         });
+        order();
         window.location.href = data.url
       }
 
@@ -128,7 +151,7 @@ const Cart = () => {
               >
                 <img
                   className="max-w-full h-full object-cover"
-                  src={`http://localhost:5000/images/${product.image[0]}`}
+                  src={product.image[0]}
                   alt={product.name}
                 />
               </div>

@@ -3,6 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB.js";
+import {connectCloudinary} from './config/cloudinary.js'
 dotenv.config();
 import userRoutes from "./routes/user.routes.js";
 import sellerRoutes from "./routes/seller.routes.js";
@@ -12,7 +13,6 @@ import addressRoutes from "./routes/address.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import {webhookController} from "./controller/payment.controller.js"
 
-import { connectCloudinary } from "./config/cloudinary.js";
 
 const app = express();
 

@@ -30,7 +30,6 @@ export const sellerLogin = async (req, res) => {
   }
 };
 
-// check seller auth  : /api/seller/is-auth
 export const checkAuth = async (req, res) => {
   try {
     res.status(200).json({
@@ -41,7 +40,7 @@ export const checkAuth = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-// logout seller: /api/seller/logout
+
 export const sellerLogout = async (req, res) => {
   try {
     res.clearCookie("sellerToken", {

@@ -20,20 +20,20 @@ export const createCheckout = async(req,res) => {
         payment_method_types : ["card"],
         mode:"payment",
 
-
         line_items : items.map((item) => ({
             price_data:{
                 currency:"inr",
                 product_data:{
                     name:item.name,
+                    images:item.image,
                 },
                 unit_amount:item.price*100,
             },
             quantity:item.quantity,
         })),
 
-        success_url:`${process.env.CLIENT_URL}/success`,
-        success_url:`${process.env.CLIENT_URL}/cart`
+        success_url:`${process.env.CLIENT_URL}/my-order`,
+        success_url:`${process.env.CLIENT_URL}/my-order`
 
         
     })
@@ -68,19 +68,11 @@ export const webhookController = async (req,res) => {
 
         if(event.type === "checkout.session.completed"){
             const session = event.data.object;
-
-            const order = Order.create({
-                user:session.metadata.userId,
-                items:JSON.parse(session.metadata.items),
-                paymentType:"paid",
-                stripeSessionId:session.id,
-                price:session.amount_total/100,
-
-            });
-            console.log("order_created");
         }
 
         res.json({
+            success:true,
+            message:"order created",
             received:true
         })
 

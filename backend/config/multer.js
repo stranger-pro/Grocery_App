@@ -1,9 +1,9 @@
 import multer from "multer";
-import {connectCloudinary} from './cloudinary';
+import {cloudinary} from './cloudinary.js';
 import {CloudinaryStorage} from 'multer-storage-cloudinary'
 
 const storage = new CloudinaryStorage({
-  connectCloudinary,
+  cloudinary:cloudinary,
   params:{
     folder:"grocery-app",
     allowed_formats:["jpg","jpeg","png","webp"],

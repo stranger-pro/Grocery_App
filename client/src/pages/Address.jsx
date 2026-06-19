@@ -24,7 +24,6 @@ const Address = () => {
     try {
       e.preventDefault();
       const { data } = await axios.post("/api/address/add", { address });
-      console.log("data", data);
       if (data.success) {
         toast.success(data.message);
         navigate("/cart");

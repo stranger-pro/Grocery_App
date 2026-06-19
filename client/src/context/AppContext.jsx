@@ -16,7 +16,7 @@ export const AppContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
   const [searchQuery, setSearchQuery] = useState("");
 
-  // check seller status
+
   const fetchSeller = async () => {
     try {
       const { data } = await axios.get("/api/seller/is-auth");
@@ -30,7 +30,7 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
-  // fetch user auth status ,user Data and cart items
+  
   const fetchUser = async () => {
     try {
       const { data } = await axios.get("/api/user/is-auth");
@@ -41,11 +41,11 @@ export const AppContextProvider = ({ children }) => {
         toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error.message);
+      
     }
   };
 
-  // fetch products
+  
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get("/api/product/list");
@@ -58,7 +58,7 @@ export const AppContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
-  // add product to cart
+
   const addToCart = (itemId) => {
     let cartData = structuredClone(cartItems || {}); // safeguard for undefined
 
@@ -117,7 +117,7 @@ export const AppContextProvider = ({ children }) => {
     fetchUser();
   }, []);
 
-  // update database cart items
+  
   useEffect(() => {
     const updateCart = async () => {
       try {
